@@ -2,9 +2,11 @@ import React from 'react';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
-// import {NavigationContainer} from '@react-navigation/native';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {NavigationContainer} from '@react-navigation/native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
+Icon.loadFont();
 
 import Welcome from '../screens/Welcome';
 import SignUp from '../screens/SignUp';
@@ -13,35 +15,42 @@ import Home from '../screens/Home';
 import Profile from '../screens/Profile';
 import Workouts from '../screens/Workouts';
 import Sessions from '../screens/Sessions';
-
-Icon.loadFont();
+import Goals from '../screens/Goals';
+import Settings from '../screens/Settings';
 
 const AuthStack = createStackNavigator();
-export const SignedOut = () => (
-  <AuthStack.Navigator>
-    <AuthStack.Screen
-      options={{headerShown: false}}
-      name="Welcome"
-      component={Welcome}
-    />
-    <AuthStack.Screen
-      options={{headerShown: true, headerBackTitleStyle: {color: '#A68FB1'}}}
-      name="Sign In"
-      component={SignIn}
-    />
-    <AuthStack.Screen
-      options={{
-        headerShown: true,
-        headerBackTitleStyle: {color: '#A68FB1'},
-      }}
-      name="Sign Up"
-      component={SignUp}
-    />
-  </AuthStack.Navigator>
-);
+const SignedOutScreen = () => {
+  return (
+    <AuthStack.Navigator>
+      <AuthStack.Screen
+        options={{headerShown: false}}
+        name="Welcome"
+        component={Welcome}
+      />
+      <AuthStack.Screen
+        options={{
+          title: 'Sign In',
+          headerShown: true,
+          headerBackTitleStyle: {color: '#A68FB1'},
+        }}
+        name="SignIn"
+        component={SignIn}
+      />
+      <AuthStack.Screen
+        options={{
+          title: 'Sign Up',
+          headerShown: true,
+          headerBackTitleStyle: {color: '#A68FB1'},
+        }}
+        name="SignUp"
+        component={SignUp}
+      />
+    </AuthStack.Navigator>
+  );
+};
 
 const Tab = createBottomTabNavigator();
-export const SignedIn = () => (
+const TabScreen = () => (
   <Tab.Navigator
     screenOptions={({route}) => ({
       tabBarIcon: ({focused, color, size}) => {
@@ -61,7 +70,13 @@ export const SignedIn = () => (
             iconName = 'calendar';
             break;
         }
-        return <Icon name={iconName} size={30} color="#A68FB1" />;
+        return (
+          <Icon
+            name={iconName}
+            size={30}
+            color={focused ? 'black' : '#A68FB1'}
+          />
+        );
       },
     })}
     tabBarOptions={{
@@ -75,23 +90,53 @@ export const SignedIn = () => (
   </Tab.Navigator>
 );
 
-// const Stack = createStackNavigator();
-// export const createRootNavigator = (signedIn = false) => {
-//   return (
-//     <NavigationContainer>
-//       {!signedIn ? (
-//         <Stack.Screen
-//           options={{headerShown: false}}
-//           name="Auth"
-//           component={SignedOut()}
-//         />
-//       ) : (
-//         <Stack.Screen
-//           options={{headerShown: false}}
-//           name="SignedIn"
-//           component={SignedIn()}
-//         />
-//       )}
-//     </NavigationContainer>
-//   );
-// };
+const Drawer = createDrawerNavigator();
+const SignedInScreen = () => (
+  <Drawer.Navigator
+    drawerContentOptions={{
+      activeTintColor: 'black',
+      inactiveTintColor: '#A68FB1',
+    }}
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: '#A68FB1',
+      },
+      headerTintColor: '#fff',
+    }}>
+    <Drawer.Screen
+      name="Dashboard"
+      component={TabScreen}
+      options={{
+        headerTitle: false,
+      }}
+    />
+    <Drawer.Screen name="Goals" component={Goals} />
+    <Drawer.Screen name="Settings" component={Settings} />
+    {/* <Drawer.Screen name="Signout" component={Signout} /> */}
+  </Drawer.Navigator>
+);
+
+const RootStack = createStackNavigator();
+export const CreateRootNavigator = ({signedIn}) => {
+  return (
+    <NavigationContainer>
+      <RootStack.Navigator>
+        {!signedIn ? (
+          <RootStack.Screen
+            options={{headerShown: false}}
+            name="Auth"
+            component={SignedOutScreen}
+          />
+        ) : (
+          <RootStack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="SignedIn"
+            component={SignedInScreen}
+          />
+        )}
+      </RootStack.Navigator>
+    </NavigationContainer>
+  );
+};

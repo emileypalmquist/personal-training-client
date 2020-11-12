@@ -20,7 +20,9 @@ const SignUp = ({navigation}) => {
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [birthdate, setBirthdate] = useState('');
 
-  const {signUp} = useContext(AuthContext);
+  const {
+    authContext: {signUp},
+  } = useContext(AuthContext);
 
   const handleSignUp = () => {
     if (password === passwordConfirmation) {
@@ -50,17 +52,20 @@ const SignUp = ({navigation}) => {
           placeholder="name"
           name="name"
           value={name}
+          leftIcon={{type: 'font-awesome', name: 'life-ring'}}
           onChangeText={setName}
         />
         <Input
           placeholder="username"
           name="username"
           value={username}
+          leftIcon={{type: 'font-awesome', name: 'user'}}
           onChangeText={setUsername}
         />
         <Input
           placeholder="email"
           name="email"
+          leftIcon={{type: 'font-awesome', name: 'envelope'}}
           value={email}
           onChangeText={setEmail}
         />
@@ -68,12 +73,14 @@ const SignUp = ({navigation}) => {
           placeholder="password"
           name="password"
           value={password}
+          leftIcon={{type: 'font-awesome', name: 'lock'}}
           onChangeText={setPassword}
           secureTextEntry
         />
         <Input
           placeholder="password confirmation"
           name="passwordConfirmation"
+          leftIcon={{type: 'font-awesome', name: 'lock'}}
           value={passwordConfirmation}
           onChangeText={setPasswordConfirmation}
           secureTextEntry
@@ -81,6 +88,7 @@ const SignUp = ({navigation}) => {
         <Input
           placeholder="birthdate: MM/DD/YYYY"
           name="birthdate"
+          leftIcon={{type: 'font-awesome', name: 'birthday-cake'}}
           value={birthdate}
           onChangeText={setBirthdate}
         />
@@ -95,7 +103,7 @@ const SignUp = ({navigation}) => {
           <TouchableOpacity onPress={() => {}}>
             <Text
               style={styles.text}
-              onPress={() => navigation.navigate('Sign In')}>
+              onPress={() => navigation.navigate('SignIn')}>
               Sign In
             </Text>
           </TouchableOpacity>

@@ -7,7 +7,6 @@ import {
   SafeAreaView,
 } from 'react-native';
 import {Input, Button} from 'react-native-elements';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {AuthContext} from '../context/AuthContext';
 
@@ -17,15 +16,17 @@ const SignIn = ({navigation}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const {signIn, user} = useContext(AuthContext);
-  const handleSignUp = () => {
+  const {
+    authContext: {signIn},
+  } = useContext(AuthContext);
+  const handleSignIn = () => {
     api.auth
       .signIn({
         username,
         password,
       })
       .then((data) => {
-        if (data.user) signIn(data.user);
+        data.user ? signIn(data.user) : alert('something went wrong');
       });
   };
 
@@ -37,12 +38,14 @@ const SignIn = ({navigation}) => {
         <Input
           placeholder="username"
           name="username"
+          leftIcon={{type: 'font-awesome', name: 'user'}}
           value={username}
           onChangeText={setUsername}
         />
         <Input
           placeholder="password"
           password="password"
+          leftIcon={{type: 'font-awesome', name: 'lock'}}
           value={password}
           onChangeText={setPassword}
           secureTextEntry
@@ -51,7 +54,7 @@ const SignIn = ({navigation}) => {
           buttonStyle={{backgroundColor: '#A68FB1'}}
           style={styles.button}
           title="Sign In"
-          onPress={handleSignUp}
+          onPress={handleSignIn}
         />
         <Text style={styles.resetPass}>Forgot Password?</Text>
         <View style={styles.link}>
@@ -59,7 +62,7 @@ const SignIn = ({navigation}) => {
           <TouchableOpacity onPress={() => {}}>
             <Text
               style={styles.text}
-              onPress={() => navigation.navigate('Sign Up')}>
+              onPress={() => navigation.navigate('SignUp')}>
               Sign up
             </Text>
           </TouchableOpacity>

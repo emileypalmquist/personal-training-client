@@ -20,13 +20,13 @@ class Welcome extends Component {
             style={styles.topButton}
             buttonStyle={{backgroundColor: '#A68FB1'}}
             title="Sign In"
-            onPress={() => this.props.navigation.navigate('Sign In')}
+            onPress={() => this.props.navigation.navigate('SignIn')}
           />
           <Button
             style={styles.button}
             buttonStyle={{backgroundColor: '#A68FB1'}}
             title="Sign Up"
-            onPress={() => this.props.navigation.navigate('Sign Up')}
+            onPress={() => this.props.navigation.navigate('SignUp')}
           />
         </View>
       </>

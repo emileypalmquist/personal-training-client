@@ -16,8 +16,7 @@ const headers = {
   Accept: 'application/json',
 };
 
-const persistAuthHeaders = async () => {
-  let token = await getToken();
+const persistAuthHeaders = (token) => {
   return {
     ...headers,
     Authorization: `Bearer ${token}`,
@@ -37,7 +36,7 @@ const signIn = (user) => {
       if (data.message) {
         alert(data.message);
       } else {
-        AsyncStorage.setItem('token', JSON.stringify(data.token));
+        setToken(data.token);
         return data;
       }
     })
@@ -57,18 +56,22 @@ const signUp = (user) => {
       if (data.errors) {
         alert(data.errors);
       } else {
-        AsyncStorage.setItem('token', JSON.stringify(data.token));
+        setToken(data.token);
         return data;
       }
     })
     .catch((error) => alert(error));
 };
 
-const reAuth = async () => {
+const reAuth = (token) => {
   return fetch(API_ROOT + '/reauth', {
     method: 'GET',
-    headers: await persistAuthHeaders(),
+    headers: persistAuthHeaders(token),
   }).then((resp) => resp.json());
+};
+
+const setToken = async (token) => {
+  await AsyncStorage.setItem('token', JSON.stringify(token));
 };
 
 const signOut = async () => {

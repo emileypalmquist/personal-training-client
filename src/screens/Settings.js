@@ -4,7 +4,7 @@ import {Text, View, SafeAreaView} from 'react-native';
 import {AuthContext} from '../context/AuthContext';
 import api from '../services/api';
 
-export default Profile = () => {
+export default Settings = () => {
   const {
     authContext: {signOut},
     state: {
