@@ -18,6 +18,7 @@ import Sessions from '../screens/Sessions';
 import Goals from '../screens/Goals';
 import Settings from '../screens/Settings';
 import Stats from '../screens/Stats';
+import Workout from '../screens/Workout';
 
 const AuthStack = createStackNavigator();
 const SignedOutScreen = () => {
@@ -49,6 +50,32 @@ const SignedOutScreen = () => {
     </AuthStack.Navigator>
   );
 };
+
+const WorkoutStack = createStackNavigator();
+const WorkoutScreen = () => (
+  <WorkoutStack.Navigator>
+    <WorkoutStack.Screen
+      options={{headerShown: false}}
+      name="Workout"
+      component={Workout}
+    />
+    <WorkoutStack.Screen
+      options={{
+        title: 'All Workouts',
+        headerShown: true,
+        headerBackTitleStyle: {color: '#fff'},
+        headerStyle: {
+          backgroundColor: '#A68FB1',
+        },
+        headerTitleStyle: {
+          color: '#fff',
+        },
+      }}
+      name="Workouts"
+      component={Workouts}
+    />
+  </WorkoutStack.Navigator>
+);
 
 const Tab = createBottomTabNavigator();
 const TabScreen = () => (
@@ -85,7 +112,7 @@ const TabScreen = () => (
       inactiveTintColor: '#A68FB1',
     }}>
     <Tab.Screen name="Home" component={Home} />
-    <Tab.Screen name="Workouts" component={Workouts} />
+    <Tab.Screen name="Workouts" component={WorkoutScreen} />
     <Tab.Screen name="Sessions" component={Sessions} />
     <Tab.Screen name="Profile" component={Profile} />
   </Tab.Navigator>

@@ -66,7 +66,7 @@ export default Profile = () => {
       </View>
       <Modal
         animationType="fade"
-        transparent={true}
+        transparent={false}
         visible={modalVisible}
         onDismiss={() => {
           setModalVisible(false);

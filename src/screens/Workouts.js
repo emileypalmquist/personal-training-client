@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Text, View, SafeAreaView, ScrollView} from 'react-native';
+import {Text, View, ScrollView} from 'react-native';
 import {AuthContext} from '../context/AuthContext';
 import WorkoutCard from '../components/WorkoutCard';
 
@@ -21,7 +21,6 @@ export default Workouts = () => {
 
   return (
     <>
-      <SafeAreaView />
       <ScrollView>
         <View>{renderWorkouts()}</View>
       </ScrollView>
