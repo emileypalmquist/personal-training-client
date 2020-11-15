@@ -1,6 +1,12 @@
-import React, {Component, useMemo} from 'react';
+import React from 'react';
 
 export const AuthContext = React.createContext();
+
+export const initialState = {
+  isLoading: true,
+  signedIn: false,
+  user: {workouts: []},
+};
 
 export const loginReducer = (prevState, action) => {
   switch (action.type) {
@@ -23,7 +29,7 @@ export const loginReducer = (prevState, action) => {
         ...prevState,
         signedIn: false,
         isLoading: false,
-        user: {},
+        user: {workouts: []},
       };
     case 'REAUTH':
       return {
@@ -32,13 +38,13 @@ export const loginReducer = (prevState, action) => {
         isLoading: false,
         user: action.user,
       };
+    case 'UPDATE_USER':
+      console.log(action.user);
+      return {
+        ...prevState,
+        user: action.user,
+      };
     default:
       return prevState;
   }
-};
-
-export const initialState = {
-  isLoading: true,
-  signedIn: false,
-  user: {},
 };

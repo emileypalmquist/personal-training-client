@@ -4,9 +4,8 @@ import {Text, View, SafeAreaView} from 'react-native';
 import {AuthContext} from '../context/AuthContext';
 import api from '../services/api';
 
-export default Settings = () => {
+export default Stats = () => {
   const {
-    authContext: {signOut},
     state: {
       user: {name},
     },
@@ -16,7 +15,7 @@ export default Settings = () => {
     <>
       <SafeAreaView />
       <View>
-        <Text>Settings</Text>
+        <Text>{name}</Text>
       </View>
     </>
   );

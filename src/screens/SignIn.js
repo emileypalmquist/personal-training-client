@@ -13,7 +13,7 @@ import {AuthContext} from '../context/AuthContext';
 import api from '../services/api';
 
 const SignIn = ({navigation}) => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const {
@@ -22,7 +22,7 @@ const SignIn = ({navigation}) => {
   const handleSignIn = () => {
     api.auth
       .signIn({
-        username,
+        email,
         password,
       })
       .then((data) => {
@@ -36,11 +36,11 @@ const SignIn = ({navigation}) => {
       <View styles={styles.main}>
         <Text style={styles.header}>Please Sign In</Text>
         <Input
-          placeholder="username"
-          name="username"
-          leftIcon={{type: 'font-awesome', name: 'user'}}
-          value={username}
-          onChangeText={setUsername}
+          placeholder="email"
+          name="email"
+          leftIcon={{type: 'font-awesome', name: 'envelope'}}
+          value={email}
+          onChangeText={setEmail}
         />
         <Input
           placeholder="password"

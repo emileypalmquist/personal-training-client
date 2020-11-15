@@ -17,6 +17,7 @@ import Workouts from '../screens/Workouts';
 import Sessions from '../screens/Sessions';
 import Goals from '../screens/Goals';
 import Settings from '../screens/Settings';
+import Stats from '../screens/Stats';
 
 const AuthStack = createStackNavigator();
 const SignedOutScreen = () => {
@@ -110,6 +111,7 @@ const SignedInScreen = () => (
         headerTitle: false,
       }}
     />
+    <Drawer.Screen name="Stats" component={Stats} />
     <Drawer.Screen name="Goals" component={Goals} />
     <Drawer.Screen name="Settings" component={Settings} />
     {/* <Drawer.Screen name="Signout" component={Signout} /> */}

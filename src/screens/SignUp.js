@@ -5,15 +5,17 @@ import {
   Text,
   TouchableOpacity,
   SafeAreaView,
+  Image,
 } from 'react-native';
-import {Input, Button} from 'react-native-elements';
+import {Input, Button, Icon} from 'react-native-elements';
+
+import ImagePicker from 'react-native-image-picker';
 
 import {AuthContext} from '../context/AuthContext';
-
 import api from '../services/api';
 
 const SignUp = ({navigation}) => {
-  const [username, setUsername] = useState('');
+  const [profilePhoto, setProfilePhoto] = useState(null);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -24,24 +26,52 @@ const SignUp = ({navigation}) => {
     authContext: {signUp},
   } = useContext(AuthContext);
 
+  const createFormData = () => {
+    let formData = new FormData();
+    formData.append('email', email);
+    formData.append('name', name);
+    formData.append('password', password);
+    formData.append('password_confirmation', passwordConfirmation);
+    formData.append('birthdate', birthdate);
+    if (profilePhoto) {
+      formData.append('profile_photo', {
+        name: 'profile-photo',
+        type: profilePhoto.type,
+        uri:
+          Platform.OS === 'android'
+            ? profilePhoto.uri
+            : profilePhoto.uri.replace('file://', ''),
+      });
+    }
+    return formData;
+  };
+
   const handleSignUp = () => {
+    const formData = createFormData();
+
     if (password === passwordConfirmation) {
-      api.auth
-        .signUp({
-          username,
-          email,
-          name,
-          password,
-          password_confirmation: passwordConfirmation,
-          birthdate: new Date(birthdate),
-        })
-        .then((data) => {
-          if (data.user) signUp(data.user);
-        });
+      api.auth.signUp(formData).then((data) => {
+        if (data.user) signUp(data.user);
+      });
     } else {
       alert('passwords must match');
     }
   };
+
+  const handleChoosePhoto = () => {
+    const options = {
+      noData: true,
+    };
+    ImagePicker.launchImageLibrary(options, (response) => {
+      if (response.uri) {
+        setProfilePhoto(response);
+      }
+    });
+  };
+
+  // const updateBirthdate = (date) => {
+  //   setBirthdate(date);
+  // };
 
   return (
     <>
@@ -52,15 +82,8 @@ const SignUp = ({navigation}) => {
           placeholder="name"
           name="name"
           value={name}
-          leftIcon={{type: 'font-awesome', name: 'life-ring'}}
-          onChangeText={setName}
-        />
-        <Input
-          placeholder="username"
-          name="username"
-          value={username}
           leftIcon={{type: 'font-awesome', name: 'user'}}
-          onChangeText={setUsername}
+          onChangeText={setName}
         />
         <Input
           placeholder="email"
@@ -86,11 +109,24 @@ const SignUp = ({navigation}) => {
           secureTextEntry
         />
         <Input
-          placeholder="birthdate: MM/DD/YYYY"
+          placeholder="birthdate: MM-DD-YYYY"
           name="birthdate"
           leftIcon={{type: 'font-awesome', name: 'birthday-cake'}}
           value={birthdate}
           onChangeText={setBirthdate}
+        />
+
+        {profilePhoto && (
+          <Image
+            source={{uri: profilePhoto.uri}}
+            style={{width: 100, height: 100, alignSelf: 'center'}}
+          />
+        )}
+        <Button
+          title="Choose Profile Photo"
+          onPress={handleChoosePhoto}
+          style={styles.button}
+          buttonStyle={{backgroundColor: '#A68FB1'}}
         />
         <Button
           title="Sign Up"

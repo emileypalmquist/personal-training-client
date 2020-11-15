@@ -10,11 +10,13 @@ export default Home = () => {
       user: {name},
     },
   } = useContext(AuthContext);
+
   return (
     <>
       <SafeAreaView />
       <View style={styles.main}>
-        <Text style={styles.header}>Welcome Back, {name}</Text>
+        <Text style={styles.header}>Welcome Back,</Text>
+        <Text style={styles.header}>{name}</Text>
       </View>
       <Image
         style={styles.image}

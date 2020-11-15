@@ -19,6 +19,9 @@ const App = () => {
       signOut: () => {
         dispatch({type: 'SIGNOUT'});
       },
+      updateUser: (user) => {
+        dispatch({type: 'UPDATE_USER', user: user});
+      },
     }),
     [],
   );
