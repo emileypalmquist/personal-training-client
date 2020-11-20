@@ -5,7 +5,9 @@ export const AuthContext = React.createContext();
 export const initialState = {
   isLoading: true,
   signedIn: false,
-  user: {workouts: []},
+  user: {},
+  workouts: [],
+  appointments: [],
 };
 
 export const loginReducer = (prevState, action) => {
@@ -16,6 +18,8 @@ export const loginReducer = (prevState, action) => {
         signedIn: true,
         isLoading: false,
         user: action.user,
+        workouts: action.user.workouts,
+        appointments: action.user.appointments,
       };
     case 'SIGNUP':
       return {
@@ -23,13 +27,16 @@ export const loginReducer = (prevState, action) => {
         signedIn: true,
         isLoading: false,
         user: action.user,
+        workouts: action.user.workouts,
       };
     case 'SIGNOUT':
       return {
         ...prevState,
         signedIn: false,
         isLoading: false,
-        user: {workouts: []},
+        user: {},
+        workouts: [],
+        appointments: [],
       };
     case 'REAUTH':
       return {
@@ -37,12 +44,15 @@ export const loginReducer = (prevState, action) => {
         signedIn: true,
         isLoading: false,
         user: action.user,
+        workouts: action.user.workouts,
+        appointments: action.user.appointments,
       };
     case 'UPDATE_USER':
-      console.log(action.user);
       return {
         ...prevState,
         user: action.user,
+        workouts: action.user.workouts,
+        appointments: action.user.appointments,
       };
     default:
       return prevState;

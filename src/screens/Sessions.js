@@ -1,19 +1,25 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {Text, View, SafeAreaView} from 'react-native';
 import {Calendar} from 'react-native-calendars';
 import api from '../services/api';
+import {AuthContext} from '../context/AuthContext';
 
 export default Sessions = () => {
   const [availability, setAvailability] = useState([]);
+  const {
+    authContext: {signOut},
+    state: {appointments},
+  } = useContext(AuthContext);
+
   let date = new Date();
   useEffect(() => {
     // api.availability
-    //   .getTodaysAvailibility(date)
+    //   .getMonthsAvailibility(date)
     //   .then((data) => setAvailability(data));
   }, []);
 
   const displayAvailibility = () => {
-    availability.map((a) => <Text>{a.location}</Text>);
+    return availability.map((a) => <Text>{a.location}</Text>);
   };
 
   return (

@@ -86,6 +86,16 @@ const patchUser = (token, id, data) => {
     .catch((error) => console.error(error));
 };
 
+// get user's workouts
+const getWorkouts = (token) => {
+  return fetch(API_ROOT + '/workouts', {
+    method: 'GET',
+    headers: authHeaders(token),
+  })
+    .then((resp) => resp.json())
+    .catch((error) => console.log(error));
+};
+
 export default {
   auth: {
     signIn,

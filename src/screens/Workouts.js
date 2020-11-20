@@ -5,18 +5,11 @@ import WorkoutCard from '../components/WorkoutCard';
 
 export default Workouts = () => {
   const {
-    authContext: {signOut},
-    state: {
-      user: {workouts},
-    },
+    state: {workouts},
   } = useContext(AuthContext);
 
   const renderWorkouts = () => {
-    return workouts.length > 0 ? (
-      workouts.map((w) => <WorkoutCard key={w.id} workout={w} />)
-    ) : (
-      <Text>You have no workouts</Text>
-    );
+    return workouts.map((w) => <WorkoutCard key={w.id} workout={w} />);
   };
 
   return (

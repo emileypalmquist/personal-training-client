@@ -64,6 +64,7 @@ export default Profile = () => {
           </TouchableOpacity>
         </View>
       </View>
+
       <Modal
         animationType="fade"
         transparent={false}

@@ -25,6 +25,7 @@ export default EditUserModal = ({setModalVisible}) => {
       ? (data = {
           name: newName,
           email: newEmail,
+          birthdate: newBirthdate,
           password,
           password_confirmation: passwordConfirmation,
         })
@@ -34,6 +35,7 @@ export default EditUserModal = ({setModalVisible}) => {
           birthdate: newBirthdate,
         });
     let token = null;
+
     try {
       token = await api.auth.getToken();
     } catch (e) {

@@ -1,27 +1,34 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Text, TouchableOpacity, View, StyleSheet} from 'react-native';
 import {AuthContext} from '../context/AuthContext';
 import WorkoutCard from '../components/WorkoutCard';
+import api from '../services/api';
 
 export default Workout = ({navigation}) => {
   const {
-    authContext: {signOut},
-    state: {
-      user: {workouts},
-    },
+    authContext: {},
+    state: {workouts},
   } = useContext(AuthContext);
 
   return (
     <>
       <View style={styles.container}>
-        <View>
-          <WorkoutCard workout={workouts[0]} />
-        </View>
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={() => navigation.navigate('Workouts')}>
-          <Text style={styles.buttonText}>All Workouts</Text>
-        </TouchableOpacity>
+        {workouts.length > 0 ? (
+          <>
+            <View>
+              <WorkoutCard workout={workouts[0]} />
+            </View>
+            {workouts.length > 1 && (
+              <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={() => navigation.navigate('Workouts')}>
+                <Text style={styles.buttonText}>All Workouts</Text>
+              </TouchableOpacity>
+            )}
+          </>
+        ) : (
+          <Text>You have no workouts at this time</Text>
+        )}
       </View>
     </>
   );
