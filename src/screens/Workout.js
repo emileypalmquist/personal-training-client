@@ -15,6 +15,7 @@ export default Workout = ({navigation}) => {
       <View style={styles.container}>
         {workouts.length > 0 ? (
           <>
+            <Text style={styles.header}>Most Recent Workout</Text>
             <View>
               <WorkoutCard workout={workouts[0]} />
             </View>
@@ -35,6 +36,9 @@ export default Workout = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  header: {
+    fontSize: 24,
+  },
   buttonContainer: {
     marginTop: 10,
     height: 45,

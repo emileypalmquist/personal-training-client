@@ -77,7 +77,7 @@ export default EditUserModal = ({setModalVisible}) => {
         onChangeText={setEmail}
       />
       <Input
-        placeholder="birthdate: MM-DD-YYYY"
+        placeholder="birthdate: YYYY-MM-DD"
         name="birthdate"
         leftIcon={{type: 'font-awesome', name: 'birthday-cake'}}
         value={newBirthdate}

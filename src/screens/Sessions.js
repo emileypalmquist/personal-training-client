@@ -21,14 +21,30 @@ export default Sessions = () => {
   const displayAvailibility = () => {
     return availability.map((a) => <Text>{a.location}</Text>);
   };
-
+  const vacation = {key: 'vacation', color: 'blue', selectedDotColor: 'white'};
+  const massage = {key: 'massage', color: 'purple', selectedDotColor: 'white'};
+  const workout = {key: 'workout', color: 'black', selectedDotColor: 'white'};
   return (
     <>
-      <SafeAreaView />
       <View>
-        <Calendar minDate={date} />
-        {displayAvailibility()}
+        <Calendar
+          // theme={{
+          //   backgroundColor: 'b6c1cd',
+          //   selectedDayBackgroundColor: '#00adf5',
+          // }}
+          minDate={date}
+          markedDates={{
+            '2020-10-25': {
+              dots: [vacation, workout],
+              selected: true,
+            },
+            '2020-10-26': {dots: [massage, workout], disabled: true},
+          }}
+          markingType={'multi-dot'}
+          onDayPress={(day) => console.log(day)}
+        />
       </View>
+      <View>{displayAvailibility()}</View>
     </>
   );
 };
